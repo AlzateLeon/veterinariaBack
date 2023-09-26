@@ -7,9 +7,9 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreacionUsuarioIn {
+public class ResultadoDTO {
 
-    private String nombre;
-    private String password;
+    private boolean exitoso;
+    private String mensaje;
 
 }

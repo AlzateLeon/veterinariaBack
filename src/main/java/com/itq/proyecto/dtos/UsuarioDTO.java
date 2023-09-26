@@ -7,9 +7,10 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreacionUsuarioIn {
+public class UsuarioDTO extends ResultadoDTO {
 
-    private String nombre;
+    private String user;
     private String password;
+    private Long id;
 
 }

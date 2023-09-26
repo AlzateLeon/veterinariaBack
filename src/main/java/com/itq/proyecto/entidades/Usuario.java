@@ -18,4 +18,7 @@ public class Usuario {
     @Column(nullable = false)
     private String nombre;
 
+    @Column(nullable = false)
+    private String contrasena;
+
 }
