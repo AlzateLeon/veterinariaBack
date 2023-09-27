@@ -1,8 +1,9 @@
 package com.itq.proyecto.controlador;
 
-import com.itq.proyecto.dtos.CreacionUsuarioIn;
-import com.itq.proyecto.dtos.CreacionUsuarioOut;
-import com.itq.proyecto.dtos.UsuarioDTO;
+import com.itq.proyecto.dtos.ResultadoDTO;
+import com.itq.proyecto.dtos.usuario.CreacionUsuarioIn;
+import com.itq.proyecto.dtos.usuario.CreacionUsuarioOut;
+import com.itq.proyecto.dtos.usuario.UsuarioDTO;
 import com.itq.proyecto.servicio.CreacionUsuarioServicio;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,7 +19,7 @@ public class UsuarioControlador {
         this.creacionUsuarioServicio = creacionUsuarioServicio;
     }
 
-    @PostMapping
+    @RequestMapping(value = "/crearUsuario", method = RequestMethod.POST)
     public ResponseEntity<CreacionUsuarioOut> crearUsuario(
             @RequestBody CreacionUsuarioIn creacionUsuarioIn
     ) {
@@ -27,6 +28,13 @@ public class UsuarioControlador {
                 creacionUsuario.getHttpStatus()
         );
     }
+    @RequestMapping(value = "/crearVeterinario", method = RequestMethod.POST)
+    public ResultadoDTO crearUsuarioVeterinario(
+            @RequestBody CreacionUsuarioIn creacionUsuarioIn
+    ) {
+        return creacionUsuarioServicio.crearVeterinario(creacionUsuarioIn);
+    }
+
 
     @GetMapping
     public UsuarioDTO consultarUsuario(

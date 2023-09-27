@@ -16,5 +16,5 @@ import java.util.function.Function;
 @Repository
 public interface  RepositorioUsuario extends JpaRepository<Usuario, Long> {
 
-    Optional<Usuario> findByNombreAndContrasena(String nombre, String contrasena);
+    Optional<Usuario> findByUserNameAndContrasena(String user, String contrasena);
 }

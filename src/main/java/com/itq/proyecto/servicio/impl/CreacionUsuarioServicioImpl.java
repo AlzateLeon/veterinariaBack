@@ -1,13 +1,13 @@
 package com.itq.proyecto.servicio.impl;
 
-import com.itq.proyecto.dtos.CreacionUsuarioIn;
-import com.itq.proyecto.dtos.CreacionUsuarioOut;
-import com.itq.proyecto.dtos.UsuarioDTO;
+import com.itq.proyecto.dtos.ResultadoDTO;
+import com.itq.proyecto.dtos.usuario.CreacionUsuarioIn;
+import com.itq.proyecto.dtos.usuario.CreacionUsuarioOut;
+import com.itq.proyecto.dtos.usuario.UsuarioDTO;
 import com.itq.proyecto.entidades.Usuario;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import com.itq.proyecto.servicio.CreacionUsuarioServicio;
 import lombok.AllArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +18,6 @@ import java.util.Optional;
 public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
     private RepositorioUsuario repositorioUsuario;
-
 
 
     @Override
@@ -38,8 +37,12 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
             }
 
             Usuario user  = new Usuario();
-            user.setNombre(creacionIn.getNombre());
             user.setContrasena(creacionIn.getPassword());
+            user.setNombre(creacionIn.getNombre());
+            user.setUserName(creacionIn.getUserName());
+            user.setCorreo(creacionIn.getCorreo());
+            user.setCedula(creacionIn.getCedula());
+            user.setTipoUsuarioEnum(creacionIn.getTipoUsuarioEnum());
 
             repositorioUsuario.save(user);
 
@@ -51,8 +54,8 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         return creacionOut;
     }
 
-    public boolean validarUsuarioExistente(String nombre, String contrasena) {
-        Optional<Usuario> usuario = repositorioUsuario.findByNombreAndContrasena(nombre, contrasena);
+    public boolean validarUsuarioExistente(String user, String contrasena) {
+        Optional<Usuario> usuario = repositorioUsuario.findByUserNameAndContrasena(user, contrasena);
         return usuario.isPresent();
     }
 
@@ -61,7 +64,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
         UsuarioDTO userDTO = new UsuarioDTO();
         userDTO.setExitoso(true);
-        Optional<Usuario> usuario = repositorioUsuario.findByNombreAndContrasena(user, contrasena);
+        Optional<Usuario> usuario = repositorioUsuario.findByUserNameAndContrasena(user, contrasena);
 
         if (!usuario.isPresent()){
             userDTO.setExitoso(false);
@@ -71,8 +74,25 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
         Usuario userEntity = usuario.get();
         userDTO.setUser(userEntity.getNombre());
-        userDTO.setId(userEntity.getId());
+        userDTO.setId(userEntity.getIdUser());
 
         return userDTO;
+    }
+
+    @Override
+    public ResultadoDTO crearVeterinario(CreacionUsuarioIn creacionUsuarioIn) {
+
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try{
+            resultadoDTO = crearUsuario(creacionUsuarioIn);
+
+        } catch (Exception e) {
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje("Error al crear la mascota, causa: " + e.getMessage());
+        }
+
+        return resultadoDTO;
     }
 }

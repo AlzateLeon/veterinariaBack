@@ -1,6 +1,6 @@
 package com.itq.proyecto.entidades;
 
-import com.itq.proyecto.enums.TipoUsuarioEnum;
+import com.itq.proyecto.enums.TipoMascota;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -10,29 +10,28 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Usuario {
+public class Mascota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long idUser;
+    private Long id;
 
     @Column(nullable = false)
     private String nombre;
 
+    @OneToOne
+    @JoinColumn(nullable = false)
+    private Usuario dueno;
+
     @Column(nullable = false)
-    private String contrasena;
+    private int edad;
+
+    @Column(nullable = false)
+    private String raza;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false)
-    private TipoUsuarioEnum tipoUsuarioEnum;
+    private TipoMascota tipoMascota;
 
-    @Column(nullable = false)
-    private String userName;
-
-    @Column(nullable = false)
-    private String correo;
-
-    @Column(nullable = false)
-    private String cedula;
 
 }

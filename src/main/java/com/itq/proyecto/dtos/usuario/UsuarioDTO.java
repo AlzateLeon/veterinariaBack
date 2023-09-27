@@ -1,5 +1,6 @@
-package com.itq.proyecto.dtos;
+package com.itq.proyecto.dtos.usuario;
 
+import com.itq.proyecto.dtos.ResultadoDTO;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
