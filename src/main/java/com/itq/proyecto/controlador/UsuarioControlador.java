@@ -38,9 +38,9 @@ public class UsuarioControlador {
 
     @GetMapping
     public UsuarioDTO consultarUsuario(
-        String user, String contrasena
+        String correo, String contrasena
     ){
-        return creacionUsuarioServicio.consutarUsuarioExistente(user, contrasena);
+        return creacionUsuarioServicio.consutarUsuarioExistenteCorreoContraena(correo, contrasena);
 
     }
 }

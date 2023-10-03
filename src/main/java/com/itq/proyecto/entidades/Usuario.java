@@ -16,7 +16,7 @@ public class Usuario {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long idUser;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String nombre;
 
     @Column(nullable = false)
@@ -27,12 +27,9 @@ public class Usuario {
     private TipoUsuarioEnum tipoUsuarioEnum;
 
     @Column(nullable = false)
-    private String userName;
-
-    @Column(nullable = false)
     private String correo;
 
-    @Column(nullable = false)
+    @Column(nullable = true)
     private String cedula;
 
 }

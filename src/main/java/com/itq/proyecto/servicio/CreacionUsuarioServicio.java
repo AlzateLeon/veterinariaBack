@@ -9,7 +9,7 @@ public interface CreacionUsuarioServicio {
 
     CreacionUsuarioOut crearUsuario(CreacionUsuarioIn creacionIn);
 
-    UsuarioDTO consutarUsuarioExistente(String user, String contrasena);
+    UsuarioDTO consutarUsuarioExistenteCorreoContraena(String correo, String password);
 
     ResultadoDTO crearVeterinario(CreacionUsuarioIn creacionUsuarioIn);
 }

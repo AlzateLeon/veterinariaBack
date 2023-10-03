@@ -28,18 +28,17 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         creacionOut.setHttpStatus(HttpStatus.OK);
 
         try {
-            if (validarUsuarioExistente(creacionIn.getNombre(), creacionIn.getPassword())){
+            if (validarUsuarioExistente(creacionIn.getCorreo())){
 
                 creacionOut.setExitoso(false);
                 creacionOut.setHttpStatus(HttpStatus.OK);
-                creacionOut.setMensaje("Usuario ya existe");
+                creacionOut.setMensaje("Usuario con el correo ingresado ya existe");
                 return creacionOut;
             }
 
             Usuario user  = new Usuario();
             user.setContrasena(creacionIn.getPassword());
             user.setNombre(creacionIn.getNombre());
-            user.setUserName(creacionIn.getUserName());
             user.setCorreo(creacionIn.getCorreo());
             user.setCedula(creacionIn.getCedula());
             user.setTipoUsuarioEnum(creacionIn.getTipoUsuarioEnum());
@@ -49,22 +48,17 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         } catch (Exception e) {
             creacionOut.setExitoso(false);
             creacionOut.setHttpStatus(HttpStatus.BAD_REQUEST);
+            creacionOut.setMensaje(e.getMessage());
         }
 
         return creacionOut;
     }
 
-    public boolean validarUsuarioExistente(String user, String contrasena) {
-        Optional<Usuario> usuario = repositorioUsuario.findByUserNameAndContrasena(user, contrasena);
-        return usuario.isPresent();
-    }
-
     @Override
-    public UsuarioDTO consutarUsuarioExistente(String user, String contrasena){
-
+    public UsuarioDTO consutarUsuarioExistenteCorreoContraena(String correo, String password) {
         UsuarioDTO userDTO = new UsuarioDTO();
         userDTO.setExitoso(true);
-        Optional<Usuario> usuario = repositorioUsuario.findByUserNameAndContrasena(user, contrasena);
+        Optional<Usuario> usuario = repositorioUsuario.findByCorreoAndContrasena(correo, password);
 
         if (!usuario.isPresent()){
             userDTO.setExitoso(false);
@@ -79,6 +73,12 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         return userDTO;
     }
 
+    public boolean validarUsuarioExistente(String correo) {
+        Optional<Usuario> usuario = repositorioUsuario.findByCorreo(correo);
+        return usuario.isPresent();
+    }
+
+
     @Override
     public ResultadoDTO crearVeterinario(CreacionUsuarioIn creacionUsuarioIn) {
 
@@ -90,7 +90,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
         } catch (Exception e) {
             resultadoDTO.setExitoso(false);
-            resultadoDTO.setMensaje("Error al crear la mascota, causa: " + e.getMessage());
+            resultadoDTO.setMensaje("Error al crear el veterinario, causa: " + e.getMessage());
         }
 
         return resultadoDTO;
