@@ -67,8 +67,12 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         }
 
         Usuario userEntity = usuario.get();
-        userDTO.setUser(userEntity.getNombre());
-        userDTO.setId(userEntity.getIdUser());
+        userDTO.setNombre(userEntity.getNombre());
+        userDTO.setIdUser(userEntity.getIdUser());
+        userDTO.setCorreo(userEntity.getCorreo());
+        userDTO.setContrasena(userEntity.getContrasena());
+        userDTO.setCedula(userEntity.getCedula());
+        userDTO.setTipoUsuarioEnum(userEntity.getTipoUsuarioEnum());
 
         return userDTO;
     }
