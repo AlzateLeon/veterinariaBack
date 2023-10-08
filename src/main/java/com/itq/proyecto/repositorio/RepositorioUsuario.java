@@ -20,4 +20,6 @@ public interface  RepositorioUsuario extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByCorreoAndContrasena(String correo, String contrasena);
 
+    Optional<Usuario> findByIdUser(Long idUser);
+
 }

@@ -3,11 +3,13 @@ package com.itq.proyecto.servicio.impl;
 import com.itq.proyecto.dtos.ResultadoDTO;
 import com.itq.proyecto.dtos.usuario.CreacionUsuarioIn;
 import com.itq.proyecto.dtos.usuario.CreacionUsuarioOut;
+import com.itq.proyecto.dtos.usuario.EditarUsuarioMascotaInDTO;
 import com.itq.proyecto.dtos.usuario.UsuarioDTO;
 import com.itq.proyecto.entidades.Usuario;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import com.itq.proyecto.servicio.CreacionUsuarioServicio;
 import lombok.AllArgsConstructor;
+import lombok.extern.log4j.Log4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
@@ -95,6 +97,34 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         } catch (Exception e) {
             resultadoDTO.setExitoso(false);
             resultadoDTO.setMensaje("Error al crear el veterinario, causa: " + e.getMessage());
+        }
+
+        return resultadoDTO;
+    }
+
+    @Override
+    public ResultadoDTO editarUsuarioMascota(EditarUsuarioMascotaInDTO editarusuarioMascotaIn) {
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try{
+            Optional<Usuario> usuario = repositorioUsuario.findByIdUser(editarusuarioMascotaIn.getIdUsuario());
+
+            if (!usuario.isPresent()){
+                resultadoDTO.setExitoso(false);
+                resultadoDTO.setMensaje("Usuario no existe");
+                return resultadoDTO;
+            }
+
+            Usuario userEntity = usuario.get();
+            userEntity.setNombre(editarusuarioMascotaIn.getNombre());
+            userEntity.setCorreo(editarusuarioMascotaIn.getCorreo());
+
+            repositorioUsuario.save(userEntity);
+
+        } catch (Exception e) {
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje("Error al editar el Usuario, causa: " + e.getMessage());
         }
 
         return resultadoDTO;

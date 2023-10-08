@@ -1,7 +1,10 @@
 package com.itq.proyecto.configuracion;
 
+import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
+import com.itq.proyecto.servicio.CreacionMascotaServicio;
 import com.itq.proyecto.servicio.CreacionUsuarioServicio;
+import com.itq.proyecto.servicio.impl.CreacionMascotaServicioImpl;
 import com.itq.proyecto.servicio.impl.CreacionUsuarioServicioImpl;
 import org.apache.catalina.filters.CorsFilter;
 import org.springframework.context.annotation.Bean;
@@ -17,6 +20,12 @@ public class ConfiguracionVeterinaria {
     @Primary
     public CreacionUsuarioServicio crearUsuarioServicio(RepositorioUsuario repositorioUsuario){
         return new CreacionUsuarioServicioImpl(repositorioUsuario);
+    }
+
+    @Bean
+    public CreacionMascotaServicio crearMascotaService(RepositorioMascota repositorioMascota,
+                                                       RepositorioUsuario repositorioUsuario){
+        return new CreacionMascotaServicioImpl(repositorioMascota, repositorioUsuario);
     }
 
 }

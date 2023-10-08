@@ -10,27 +10,29 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "Mascota")
 public class Mascota {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
+    @Column(name = "ID_MASCOTA")
+    private Long idMascota;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "NOMBRE")
     private String nombre;
 
-    @OneToOne
-    @JoinColumn(nullable = false)
+    @ManyToOne
+    @JoinColumn(nullable = false, name = "DUENO_ID")
     private Usuario dueno;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "EDAD")
     private int edad;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "RAZA")
     private String raza;
 
     @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
+    @Column(nullable = false, name = "TIPO_MASCOTA")
     private TipoMascota tipoMascota;
 
 

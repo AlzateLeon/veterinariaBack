@@ -18,4 +18,5 @@ public class MascotaDTO {
     private int edad;
     private String raza;
     private TipoMascota tipoMascota;
+    private boolean clicked ;
 }

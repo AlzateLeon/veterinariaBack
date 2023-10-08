@@ -3,6 +3,7 @@ package com.itq.proyecto.controlador;
 import com.itq.proyecto.dtos.ResultadoDTO;
 import com.itq.proyecto.dtos.usuario.CreacionUsuarioIn;
 import com.itq.proyecto.dtos.usuario.CreacionUsuarioOut;
+import com.itq.proyecto.dtos.usuario.EditarUsuarioMascotaInDTO;
 import com.itq.proyecto.dtos.usuario.UsuarioDTO;
 import com.itq.proyecto.servicio.CreacionUsuarioServicio;
 import org.springframework.http.ResponseEntity;
@@ -42,5 +43,12 @@ public class UsuarioControlador {
     ){
         return creacionUsuarioServicio.consutarUsuarioExistenteCorreoContraena(correo, contrasena);
 
+    }
+
+    @RequestMapping(value = "/editarUsuario", method = RequestMethod.POST)
+    public ResultadoDTO editarUsuarioMascota(
+            @RequestBody EditarUsuarioMascotaInDTO editarusuarioMascotaIn
+    ) {
+        return creacionUsuarioServicio.editarUsuarioMascota(editarusuarioMascotaIn);
     }
 }
