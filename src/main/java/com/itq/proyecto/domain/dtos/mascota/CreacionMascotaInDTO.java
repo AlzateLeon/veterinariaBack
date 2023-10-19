@@ -13,7 +13,17 @@ public class CreacionMascotaInDTO {
     private String nombre;
     private Long idDueno;
     private int edad;
-    private TipoMascota tipoMascota;
+    private String tipoMascota;
     private String raza;
 
+    @Override
+    public String toString() {
+        return "CreacionMascotaInDTO{" +
+                "nombre='" + nombre + '\'' +
+                ", idDueno=" + idDueno +
+                ", edad=" + edad +
+                ", tipoMascota='" + tipoMascota + '\'' +
+                ", raza='" + raza + '\'' +
+                '}';
+    }
 }

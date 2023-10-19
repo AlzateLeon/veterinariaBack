@@ -1,4 +1,4 @@
-package com.itq.proyecto.web.controlador;
+package com.itq.proyecto.controladores.controlador;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.vacuna.CreacionVacunaInDTO;

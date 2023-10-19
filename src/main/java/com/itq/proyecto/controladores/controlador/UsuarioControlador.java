@@ -1,10 +1,8 @@
-package com.itq.proyecto.web.controlador;
+package com.itq.proyecto.controladores.controlador;
 
+import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
-import com.itq.proyecto.domain.dtos.usuario.CreacionUsuarioIn;
-import com.itq.proyecto.domain.dtos.usuario.CreacionUsuarioOut;
-import com.itq.proyecto.domain.dtos.usuario.EditarUsuarioMascotaInDTO;
-import com.itq.proyecto.domain.dtos.usuario.UsuarioDTO;
+import com.itq.proyecto.domain.dtos.usuario.*;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,13 +19,11 @@ public class UsuarioControlador {
     }
 
     @RequestMapping(value = "/crearUsuario", method = RequestMethod.POST)
-    public ResponseEntity<CreacionUsuarioOut> crearUsuario(
+    public CreacionUsuarioOutDTO crearUsuario(
             @RequestBody CreacionUsuarioIn creacionUsuarioIn
     ) {
-        CreacionUsuarioOut creacionUsuario = creacionUsuarioServicio.crearUsuario(creacionUsuarioIn);
-        return new ResponseEntity<>(creacionUsuario,
-                creacionUsuario.getHttpStatus()
-        );
+        CreacionUsuarioOutDTO creacionUsuario = creacionUsuarioServicio.crearUsuario(creacionUsuarioIn);
+        return creacionUsuario;
     }
     @RequestMapping(value = "/crearVeterinario", method = RequestMethod.POST)
     public ResultadoDTO crearUsuarioVeterinario(
@@ -50,5 +46,19 @@ public class UsuarioControlador {
             @RequestBody EditarUsuarioMascotaInDTO editarusuarioMascotaIn
     ) {
         return creacionUsuarioServicio.editarUsuarioMascota(editarusuarioMascotaIn);
+    }
+
+    @RequestMapping(value = "/mandarCorreoValidacion", method = RequestMethod.POST)
+    public ResultadoDTO mandarCorreoValidacion(
+            @RequestBody EnvioCorreoInDTO envioCorreoInDTO
+    ) {
+        return creacionUsuarioServicio.mandarCorreoValidacion(envioCorreoInDTO);
+    }
+
+    @RequestMapping(value = "/activarCuenta", method = RequestMethod.POST)
+    public ResultadoDTO activarCuenta(
+            @RequestBody ActivarCuentaDTO activarCuentaDTO) {
+
+        return creacionUsuarioServicio.activarCuenta(activarCuentaDTO);
     }
 }

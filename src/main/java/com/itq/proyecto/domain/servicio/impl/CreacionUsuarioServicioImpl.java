@@ -1,17 +1,19 @@
 package com.itq.proyecto.domain.servicio.impl;
 
+import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
-import com.itq.proyecto.domain.dtos.usuario.CreacionUsuarioIn;
-import com.itq.proyecto.domain.dtos.usuario.CreacionUsuarioOut;
-import com.itq.proyecto.domain.dtos.usuario.EditarUsuarioMascotaInDTO;
-import com.itq.proyecto.domain.dtos.usuario.UsuarioDTO;
-import com.itq.proyecto.domain.entidades.Usuario;
+import com.itq.proyecto.domain.dtos.usuario.*;
+import com.itq.proyecto.domain.servicio.ActivationRequestService;
+import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.Optional;
 
 @Service
@@ -20,38 +22,41 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
     private RepositorioUsuario repositorioUsuario;
 
+    private JavaMailSender javaMailSender;
+
+    private ActivationRequestService activationRequestService;
+
 
     @Override
-    public CreacionUsuarioOut crearUsuario(CreacionUsuarioIn creacionIn) {
+    public CreacionUsuarioOutDTO crearUsuario(CreacionUsuarioIn creacionIn) {
 
-        CreacionUsuarioOut creacionOut = new CreacionUsuarioOut();
+        CreacionUsuarioOutDTO creacionOut = new CreacionUsuarioOutDTO();
         creacionOut.setExitoso(true);
-        creacionOut.setHttpStatus(HttpStatus.OK);
+        Usuario user  = new Usuario();
 
         try {
             if (validarUsuarioExistente(creacionIn.getCorreo())){
 
                 creacionOut.setExitoso(false);
-                creacionOut.setHttpStatus(HttpStatus.OK);
                 creacionOut.setMensaje("Usuario con el correo ingresado ya existe");
                 return creacionOut;
             }
 
-            Usuario user  = new Usuario();
             user.setContrasena(creacionIn.getPassword());
             user.setNombre(creacionIn.getNombre());
             user.setCorreo(creacionIn.getCorreo());
             user.setCedula(creacionIn.getCedula());
             user.setTipoUsuarioEnum(creacionIn.getTipoUsuarioEnum());
+            user.setActivo(false);
 
             repositorioUsuario.save(user);
 
         } catch (Exception e) {
             creacionOut.setExitoso(false);
-            creacionOut.setHttpStatus(HttpStatus.BAD_REQUEST);
             creacionOut.setMensaje(e.getMessage());
         }
 
+        creacionOut.setIdUser(user.getIdUser());
         return creacionOut;
     }
 
@@ -74,6 +79,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         userDTO.setContrasena(userEntity.getContrasena());
         userDTO.setCedula(userEntity.getCedula());
         userDTO.setTipoUsuarioEnum(userEntity.getTipoUsuarioEnum());
+        userDTO.setActivo(userEntity.isActivo());
 
         return userDTO;
     }
@@ -127,5 +133,71 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         }
 
         return resultadoDTO;
+    }
+
+    @Override
+    public ResultadoDTO mandarCorreoValidacion(EnvioCorreoInDTO envioCorreoInDTO) {
+
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try {
+
+            // Crea una solicitud de activación y la agrega al servicio
+            ActivationRequest activationRequest = new ActivationRequest(envioCorreoInDTO.getCorreo());
+            activationRequestService.addActivationRequest(activationRequest);
+
+            // Envia un correo electrónico con el enlace de activación
+            String activacionLink = "http://localhost:4200/validar-mail/" +
+                    activationRequest.getActivationToken() + "/" + envioCorreoInDTO.getIdUser();
+            SimpleMailMessage mailMessage = new SimpleMailMessage();
+            mailMessage.setTo(envioCorreoInDTO.getCorreo());
+            mailMessage.setSubject("Activación de cuenta");
+            mailMessage.setText("Por favor, haga clic en el enlace para activar su cuenta: " + activacionLink);
+            javaMailSender.send(mailMessage);
+
+        } catch (Exception e){
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje(e.getMessage());
+        }
+
+        return resultadoDTO;
+    }
+
+    @Override
+    public ResultadoDTO activarCuenta(ActivarCuentaDTO activarCuentaDTO) {
+
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try{
+            ActivationRequest activationRequest = activationRequestService.getActivationRequestByToken(activarCuentaDTO.getToken());
+
+            boolean vencido = activationRequest.getExpirationDate().before(new Date());
+
+            if (activationRequest != null && !vencido) {
+                // Marcar la cuenta como activa en tu base de datos
+                // Puedes realizar la lógica necesaria para activar la cuenta aquí
+
+                Optional<Usuario> usuario = repositorioUsuario.findByIdUser(activarCuentaDTO.getIdUsuario());
+
+                if(usuario.isPresent()){
+                    Usuario user = usuario.get();
+                    user.setActivo(true);
+                    repositorioUsuario.save(user);
+                }
+
+            } else {
+                resultadoDTO.setExitoso(false);
+                resultadoDTO.setMensaje("El enlace de activación no es válido o ha expirado.");
+            }
+
+        } catch (Exception e){
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje(e.getMessage());
+        }
+
+        return resultadoDTO;
+
     }
 }

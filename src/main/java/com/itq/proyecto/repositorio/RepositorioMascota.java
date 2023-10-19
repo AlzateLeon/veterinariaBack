@@ -1,7 +1,7 @@
 package com.itq.proyecto.repositorio;
 
-import com.itq.proyecto.domain.entidades.Mascota;
-import com.itq.proyecto.domain.entidades.Usuario;
+import com.itq.proyecto.repositorio.entidades.Mascota;
+import com.itq.proyecto.repositorio.entidades.Usuario;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

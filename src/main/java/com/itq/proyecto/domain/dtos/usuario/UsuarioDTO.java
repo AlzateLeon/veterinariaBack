@@ -17,5 +17,6 @@ public class UsuarioDTO extends ResultadoDTO {
     private TipoUsuarioEnum tipoUsuarioEnum;
     private String correo;
     private String cedula;
+    private boolean activo;
 
 }

@@ -1,4 +1,4 @@
-package com.itq.proyecto.domain.entidades;
+package com.itq.proyecto.repositorio.entidades;
 
 import com.itq.proyecto.domain.enums.TipoMascota;
 import jakarta.persistence.*;

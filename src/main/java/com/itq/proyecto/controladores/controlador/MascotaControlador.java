@@ -1,4 +1,4 @@
-package com.itq.proyecto.web.controlador;
+package com.itq.proyecto.controladores.controlador;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
@@ -20,7 +20,7 @@ public class MascotaControlador {
         this.creacionMascotaServicio = creacionMascotaServicio;
     }
 
-    @PostMapping
+    @RequestMapping(value = "/crearMascota", method = RequestMethod.POST)
     @ApiResponse(description = "Metodo encargado de crear una mascota y asignarla a un usuario",
     responseCode = "200")
     public ResultadoDTO crearMascota(

@@ -1,4 +1,4 @@
-package com.itq.proyecto.domain.entidades;
+package com.itq.proyecto.repositorio.entidades;
 
 import com.itq.proyecto.domain.enums.TipoUsuarioEnum;
 import jakarta.persistence.*;
@@ -38,5 +38,8 @@ public class Usuario {
 
     @OneToMany(mappedBy = "dueno", cascade = CascadeType.ALL)
     private List<Mascota> mascotas;
+
+    @Column(nullable = false, name = "ACTIVO")
+    private boolean activo;
 
 }

@@ -4,7 +4,8 @@ import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
 import com.itq.proyecto.domain.dtos.mascota.CreacionMascotaInDTO;
 import com.itq.proyecto.domain.dtos.mascota.MascotaDTO;
-import com.itq.proyecto.domain.entidades.Mascota;
+import com.itq.proyecto.domain.enums.TipoMascota;
+import com.itq.proyecto.repositorio.entidades.Mascota;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
 import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
@@ -33,13 +34,16 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
     @Override
     public ResultadoDTO crearMascota(CreacionMascotaInDTO creacionIn) {
 
+        logger.info("dto entrada {}", creacionIn);
         ResultadoDTO resultadoDTO = new ResultadoDTO();
         resultadoDTO.setExitoso(true);
 
         try {
 
+            TipoMascota tipoMascota = TipoMascota.fromString(creacionIn.getTipoMascota());
+
             Mascota mascota = new Mascota();
-            mascota.setTipoMascota(creacionIn.getTipoMascota());
+            mascota.setTipoMascota(tipoMascota);
             mascota.setRaza(creacionIn.getRaza());
             mascota.setEdad(creacionIn.getEdad());
             mascota.setNombre(creacionIn.getNombre());

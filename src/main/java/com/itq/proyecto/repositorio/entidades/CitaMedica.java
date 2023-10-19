@@ -1,4 +1,4 @@
-package com.itq.proyecto.domain.entidades;
+package com.itq.proyecto.repositorio.entidades;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -11,11 +11,17 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
-public class VacunaAplicada {
+public class CitaMedica {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+
+    @Column(nullable = false)
+    private LocalDate fecha;
+
+    @Column(nullable = false)
+    private String hora;
 
     @OneToOne
     @JoinColumn(nullable = false)
@@ -23,8 +29,10 @@ public class VacunaAplicada {
 
     @OneToOne
     @JoinColumn(nullable = false)
+    private Usuario veterinario;
+
+    @OneToOne
+    @JoinColumn(nullable = false)
     private Vacuna vacuna;
 
-    @Column(nullable = false)
-    private LocalDate fechaAplicacion;
 }

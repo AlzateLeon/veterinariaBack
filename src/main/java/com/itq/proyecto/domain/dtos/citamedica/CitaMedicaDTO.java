@@ -1,8 +1,8 @@
 package com.itq.proyecto.domain.dtos.citamedica;
 
-import com.itq.proyecto.domain.entidades.Usuario;
-import com.itq.proyecto.domain.entidades.Mascota;
-import com.itq.proyecto.domain.entidades.Vacuna;
+import com.itq.proyecto.repositorio.entidades.Usuario;
+import com.itq.proyecto.repositorio.entidades.Mascota;
+import com.itq.proyecto.repositorio.entidades.Vacuna;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;

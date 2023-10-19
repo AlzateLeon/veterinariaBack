@@ -1,6 +1,6 @@
 package com.itq.proyecto.domain.dtos.mascota;
 
-import com.itq.proyecto.domain.entidades.Usuario;
+import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.domain.enums.TipoMascota;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

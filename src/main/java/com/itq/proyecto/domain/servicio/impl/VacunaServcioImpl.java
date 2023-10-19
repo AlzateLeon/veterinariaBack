@@ -2,8 +2,8 @@ package com.itq.proyecto.domain.servicio.impl;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.vacuna.CreacionVacunaInDTO;
-import com.itq.proyecto.domain.entidades.Vacuna;
-import com.itq.proyecto.domain.entidades.VacunaAplicada;
+import com.itq.proyecto.repositorio.entidades.Vacuna;
+import com.itq.proyecto.repositorio.entidades.VacunaAplicada;
 import com.itq.proyecto.domain.servicio.VacunaServicio;
 import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioVacuna;
