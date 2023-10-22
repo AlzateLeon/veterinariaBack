@@ -15,6 +15,7 @@ public class CreacionMascotaInDTO {
     private int edad;
     private String tipoMascota;
     private String raza;
+    private String imagenMascota;
 
     @Override
     public String toString() {

@@ -80,6 +80,8 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         userDTO.setCedula(userEntity.getCedula());
         userDTO.setTipoUsuarioEnum(userEntity.getTipoUsuarioEnum());
         userDTO.setActivo(userEntity.isActivo());
+        userDTO.setCantidadMascotas(userEntity.getMascotas().size());
+        userDTO.setImagenUser(userEntity.getImagen());
 
         return userDTO;
     }
@@ -124,6 +126,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
             Usuario userEntity = usuario.get();
             userEntity.setNombre(editarusuarioMascotaIn.getNombre());
             userEntity.setCorreo(editarusuarioMascotaIn.getCorreo());
+            userEntity.setImagen(editarusuarioMascotaIn.getImagen());
 
             repositorioUsuario.save(userEntity);
 

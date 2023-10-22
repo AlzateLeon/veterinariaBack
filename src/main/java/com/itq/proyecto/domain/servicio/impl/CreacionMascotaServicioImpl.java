@@ -48,6 +48,7 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
             mascota.setEdad(creacionIn.getEdad());
             mascota.setNombre(creacionIn.getNombre());
             mascota.setDueno(repositorioUsuario.getReferenceById(creacionIn.getIdDueno()));
+            mascota.setImagen(creacionIn.getImagenMascota());
 
             repositorioMascota.save(mascota);
 
@@ -80,6 +81,7 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
                     mascotaDTO.setEdad(mascota.getEdad());
                     mascotaDTO.setId(mascota.getIdMascota());
                     mascotaDTO.setNombre(mascota.getNombre());
+                    mascotaDTO.setImagenMascota(mascota.getImagen());
 
                     mascotasDTO.add(mascotaDTO);
                 }

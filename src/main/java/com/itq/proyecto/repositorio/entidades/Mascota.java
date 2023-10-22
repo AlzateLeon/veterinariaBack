@@ -35,4 +35,8 @@ public class Mascota {
     @Column(nullable = false, name = "TIPO_MASCOTA")
     private TipoMascota tipoMascota;
 
+    @Lob
+    @Column(nullable = true, name = "IMAGEN")
+    private String imagen;
+
 }

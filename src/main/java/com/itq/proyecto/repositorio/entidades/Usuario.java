@@ -42,4 +42,9 @@ public class Usuario {
     @Column(nullable = false, name = "ACTIVO")
     private boolean activo;
 
+    @Lob
+    @Column(nullable = true, name = "IMAGEN")
+    private String imagen;
+
+
 }
