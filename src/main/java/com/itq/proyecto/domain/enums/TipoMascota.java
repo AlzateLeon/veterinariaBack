@@ -8,7 +8,8 @@ public enum TipoMascota {
     PERRO,
     GATO,
     PEZ,
-    CABALLO;
+    AVE,
+    ROEDOR;
 
     @JsonCreator
     public static TipoMascota fromString(String value) {
