@@ -19,4 +19,6 @@ public class MascotaDTO {
     private TipoMascota tipoMascota;
     private boolean clicked ;
     private String imagenMascota;
+    private String observacion;
+
 }

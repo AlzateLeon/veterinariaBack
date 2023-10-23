@@ -39,4 +39,7 @@ public class Mascota {
     @Column(nullable = true, name = "IMAGEN")
     private String imagen;
 
+    @Column(nullable = true, name = "OBSERVACION")
+    private String observacion;
+
 }
