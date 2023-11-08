@@ -13,4 +13,6 @@ import java.util.Optional;
 public interface RepositorioMascota  extends JpaRepository<Mascota, Long> {
 
     Optional<List<Mascota>> findByDueno(Usuario user);
+
+   Optional<Mascota> findByIdMascota(Long idMascota);
 }

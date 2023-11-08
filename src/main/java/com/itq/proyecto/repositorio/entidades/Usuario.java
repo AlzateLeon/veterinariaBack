@@ -12,7 +12,10 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-@Table(name = "Usuario")
+@Table(name = "Usuario", indexes = {
+        @Index(name = "indice_correo", columnList = "CORREO"),
+        @Index(name = "indice_contrasena", columnList = "CONTRASENA")
+})
 public class Usuario {
 
     @Id

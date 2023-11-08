@@ -3,6 +3,8 @@ package com.itq.proyecto.controladores.controlador;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
 import com.itq.proyecto.domain.dtos.mascota.CreacionMascotaInDTO;
+import com.itq.proyecto.domain.dtos.mascota.EditarMascotaInDTO;
+import com.itq.proyecto.domain.dtos.usuario.EditarUsuarioMascotaInDTO;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -36,5 +38,12 @@ public class MascotaControlador {
     ){
         return creacionMascotaServicio.consutarMascotasPorUsuario(idUser);
 
+    }
+
+    @RequestMapping(value = "/editarMascota", method = RequestMethod.POST)
+    public ResultadoDTO editarMascota(
+            @RequestBody EditarMascotaInDTO editarMascotaInDTO
+    ) {
+        return creacionMascotaServicio.editarMascota(editarMascotaInDTO);
     }
 }

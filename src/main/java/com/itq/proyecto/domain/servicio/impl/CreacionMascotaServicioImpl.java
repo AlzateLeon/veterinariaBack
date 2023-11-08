@@ -3,6 +3,7 @@ package com.itq.proyecto.domain.servicio.impl;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
 import com.itq.proyecto.domain.dtos.mascota.CreacionMascotaInDTO;
+import com.itq.proyecto.domain.dtos.mascota.EditarMascotaInDTO;
 import com.itq.proyecto.domain.dtos.mascota.MascotaDTO;
 import com.itq.proyecto.domain.enums.TipoMascota;
 import com.itq.proyecto.repositorio.entidades.Mascota;
@@ -95,5 +96,33 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
         logger.debug("fin del metodo consutarMascotasPorUsuario");
        outDTO.setListaMascotas(mascotasDTO);
        return outDTO;
+    }
+
+    @Override
+    public ResultadoDTO editarMascota(EditarMascotaInDTO editarMascotaInDTO) {
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try{
+            Optional<Mascota> mascota = repositorioMascota.findByIdMascota(editarMascotaInDTO.getIdMascota());
+
+            if (mascota.isPresent()){
+                Mascota mascota1 = mascota.get();
+                mascota1.setTipoMascota(editarMascotaInDTO.getTipoMascota());
+                mascota1.setNombre(editarMascotaInDTO.getNombre());
+                mascota1.setEdad(editarMascotaInDTO.getEdad());
+                mascota1.setRaza(editarMascotaInDTO.getRaza());
+                mascota1.setImagen(editarMascotaInDTO.getImagen());
+                mascota1.setObservacion(editarMascotaInDTO.getObservacion());
+
+                repositorioMascota.save(mascota1);
+            }
+
+        } catch(Exception e){
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje(e.getMessage());
+        }
+
+        return resultadoDTO;
     }
 }

@@ -4,6 +4,7 @@ import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.usuario.*;
 import com.itq.proyecto.domain.servicio.ActivationRequestService;
+import com.itq.proyecto.repositorio.RepositorioActivationRequest;
 import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
@@ -24,7 +25,8 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
     private JavaMailSender javaMailSender;
 
-    private ActivationRequestService activationRequestService;
+    //private ActivationRequestService activationRequestService;
+    private RepositorioActivationRequest repositorioActivationRequest;
 
 
     @Override
@@ -148,11 +150,11 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
             // Crea una solicitud de activación y la agrega al servicio
             ActivationRequest activationRequest = new ActivationRequest(envioCorreoInDTO.getCorreo());
-            activationRequestService.addActivationRequest(activationRequest);
+            repositorioActivationRequest.save(activationRequest);
 
             // Envia un correo electrónico con el enlace de activación
             String activacionLink = "http://localhost:4200/validar-mail/" +
-                    activationRequest.getActivationToken() + "/" + envioCorreoInDTO.getIdUser();
+                    activationRequest.getToken() + "/" + envioCorreoInDTO.getIdUser();
             SimpleMailMessage mailMessage = new SimpleMailMessage();
             mailMessage.setTo(envioCorreoInDTO.getCorreo());
             mailMessage.setSubject("Activación de cuenta");
@@ -174,25 +176,29 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         resultadoDTO.setExitoso(true);
 
         try{
-            ActivationRequest activationRequest = activationRequestService.getActivationRequestByToken(activarCuentaDTO.getToken());
+            Optional<ActivationRequest> activationRequest = repositorioActivationRequest.findByToken(activarCuentaDTO.getToken());
 
-            boolean vencido = activationRequest.getExpirationDate().before(new Date());
+            if (activationRequest.isPresent()) {
 
-            if (activationRequest != null && !vencido) {
-                // Marcar la cuenta como activa en tu base de datos
-                // Puedes realizar la lógica necesaria para activar la cuenta aquí
+                ActivationRequest ar = activationRequest.get();
+                boolean vencido = ar.getExpirationDate().before(new Date());
+                if (!vencido){
+                    Optional<Usuario> usuario = repositorioUsuario.findByIdUser(activarCuentaDTO.getIdUsuario());
 
-                Optional<Usuario> usuario = repositorioUsuario.findByIdUser(activarCuentaDTO.getIdUsuario());
+                    if(usuario.isPresent()){
+                        Usuario user = usuario.get();
+                        user.setActivo(true);
+                        repositorioUsuario.save(user);
+                    }
 
-                if(usuario.isPresent()){
-                    Usuario user = usuario.get();
-                    user.setActivo(true);
-                    repositorioUsuario.save(user);
+                }else{
+                    resultadoDTO.setExitoso(false);
+                    resultadoDTO.setMensaje("El enlace de activación no es válido o ha expirado.");
                 }
 
-            } else {
+            }else{
                 resultadoDTO.setExitoso(false);
-                resultadoDTO.setMensaje("El enlace de activación no es válido o ha expirado.");
+                resultadoDTO.setMensaje("Activation request no existe");
             }
 
         } catch (Exception e){

@@ -1,6 +1,8 @@
 package com.itq.proyecto.domain.configuracion;
 
 import com.itq.proyecto.domain.servicio.ActivationRequestService;
+import com.itq.proyecto.domain.servicio.impl.ActivationRequestServiceImpl;
+import com.itq.proyecto.repositorio.RepositorioActivationRequest;
 import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
@@ -8,6 +10,7 @@ import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import com.itq.proyecto.domain.servicio.impl.CreacionMascotaServicioImpl;
 import com.itq.proyecto.domain.servicio.impl.CreacionUsuarioServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -29,14 +32,19 @@ public class ConfiguracionVeterinaria {
     @Primary
     public CreacionUsuarioServicio crearUsuarioServicio(RepositorioUsuario repositorioUsuario,
                                                         JavaMailSender javaMailSender,
-                                                        ActivationRequestService activationRequestService){
-        return new CreacionUsuarioServicioImpl(repositorioUsuario, javaMailSender ,activationRequestService);
+                                                        RepositorioActivationRequest repositorioActivationRequest){
+        return new CreacionUsuarioServicioImpl(repositorioUsuario, javaMailSender , repositorioActivationRequest);
     }
 
     @Bean
     public CreacionMascotaServicio crearMascotaService(RepositorioMascota repositorioMascota,
                                                        RepositorioUsuario repositorioUsuario){
         return new CreacionMascotaServicioImpl(repositorioMascota, repositorioUsuario);
+    }
+
+    @Bean
+   public ActivationRequestService activationService(RepositorioActivationRequest repositorioActivationRequest){
+        return new ActivationRequestServiceImpl(repositorioActivationRequest);
     }
 
     @Configuration
