@@ -1,6 +1,8 @@
 package com.itq.proyecto.controladores.controlador;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
+import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
+import com.itq.proyecto.domain.dtos.vacuna.AplicacionVacunaInDTO;
 import com.itq.proyecto.domain.dtos.vacuna.CreacionVacunaInDTO;
 import com.itq.proyecto.domain.servicio.VacunaServicio;
 import org.springframework.web.bind.annotation.*;
@@ -26,9 +28,9 @@ public class VacunaControlador {
 
     @RequestMapping(value = "/aplicarVacuna", method = RequestMethod.POST)
     public ResultadoDTO aplicarVacuna(
-             Long idvacuna, Long idMascota
+            AplicacionVacunaInDTO aplicacionVacunaInDTO
     ){
-        return vacunaServicio.aplicarVacuna(idvacuna, idMascota);
-
+        return vacunaServicio.aplicarVacuna(aplicacionVacunaInDTO);
     }
+
 }

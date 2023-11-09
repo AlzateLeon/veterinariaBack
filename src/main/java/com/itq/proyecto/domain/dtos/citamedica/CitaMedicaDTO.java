@@ -1,5 +1,9 @@
 package com.itq.proyecto.domain.dtos.citamedica;
 
+import com.itq.proyecto.domain.dtos.mascota.MascotaDTO;
+import com.itq.proyecto.domain.dtos.usuario.UsuarioDTO;
+import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
+import com.itq.proyecto.domain.enums.TipoCitaMascotaEnum;
 import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.repositorio.entidades.Mascota;
 import com.itq.proyecto.repositorio.entidades.Vacuna;
@@ -17,7 +21,8 @@ public class CitaMedicaDTO {
     private Long id;
     private LocalDate fecha;
     private String hora;
-    private Mascota mascota;
-    private Usuario veterinario;
-    private Vacuna vacuna;
+    private String nombreMascota;
+    private String nombreVeterinario;
+    private EstadoCitaMedicaEnum estadoCitaMedicaEnum;
+    private TipoCitaMascotaEnum tipoCitaMascotaEnum;
 }

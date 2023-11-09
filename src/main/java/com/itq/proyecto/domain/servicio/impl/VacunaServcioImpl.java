@@ -1,17 +1,21 @@
 package com.itq.proyecto.domain.servicio.impl;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
+import com.itq.proyecto.domain.dtos.vacuna.AplicacionVacunaInDTO;
 import com.itq.proyecto.domain.dtos.vacuna.CreacionVacunaInDTO;
+import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
+import com.itq.proyecto.domain.servicio.CitaServicio;
+import com.itq.proyecto.repositorio.RepositorioCita;
+import com.itq.proyecto.repositorio.entidades.CitaMedica;
 import com.itq.proyecto.repositorio.entidades.Vacuna;
-import com.itq.proyecto.repositorio.entidades.VacunaAplicada;
 import com.itq.proyecto.domain.servicio.VacunaServicio;
 import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioVacuna;
-import com.itq.proyecto.repositorio.RepositorioVacunaAplicada;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
+import java.util.Optional;
 
 @Service
 @AllArgsConstructor
@@ -19,7 +23,7 @@ public class VacunaServcioImpl implements VacunaServicio {
 
     private RepositorioVacuna repositorioVacuna;
     private RepositorioMascota repositorioMascota;
-    private RepositorioVacunaAplicada repositorioVacunaAplicada;
+    private RepositorioCita repositorioCita;
 
     @Override
     public ResultadoDTO crearVacuna(CreacionVacunaInDTO creacionIn) {
@@ -43,18 +47,20 @@ public class VacunaServcioImpl implements VacunaServicio {
     }
 
     @Override
-    public ResultadoDTO aplicarVacuna(Long idvacuna, Long idMascota) {
+    public ResultadoDTO aplicarVacuna(AplicacionVacunaInDTO aplicacionVacunaInDTO) {
 
         ResultadoDTO resultadoDTO = new ResultadoDTO();
         resultadoDTO.setExitoso(true);
 
         try{
 
-            VacunaAplicada vacunaAplicada = new VacunaAplicada();
-            vacunaAplicada.setFechaAplicacion(LocalDate.now());
-            vacunaAplicada.setMascota(repositorioMascota.getReferenceById(idMascota));
-            vacunaAplicada.setVacuna(repositorioVacuna.getReferenceById(idvacuna));
-            repositorioVacunaAplicada.save(vacunaAplicada);
+            //se actualiza la cita
+            Optional<CitaMedica> cita = repositorioCita.
+                    findById(aplicacionVacunaInDTO.getIdCita());
+            CitaMedica citaMedica = cita.get();
+            citaMedica.setEstadoCitaMedicaEnum(EstadoCitaMedicaEnum.EXITOSA);
+            citaMedica.setFechaActualizacion(LocalDate.now());
+            repositorioCita.save(citaMedica);
 
         } catch (Exception e) {
             resultadoDTO.setExitoso(false);

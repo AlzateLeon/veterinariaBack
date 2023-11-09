@@ -10,16 +10,19 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
+@Table(name = "VACUNA")
 public class Vacuna {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ID")
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, name = "NOMBRE")
     private String nombre;
 
-    @Column(nullable = false)
+    @Enumerated(EnumType.STRING)
+    @Column(nullable = false, name = "TIPO_MASCOTA")
     private TipoMascota tipoMascota;
 
 }

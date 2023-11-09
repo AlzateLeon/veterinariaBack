@@ -1,8 +1,11 @@
 package com.itq.proyecto.domain.configuracion;
 
 import com.itq.proyecto.domain.servicio.ActivationRequestService;
+import com.itq.proyecto.domain.servicio.CitaServicio;
 import com.itq.proyecto.domain.servicio.impl.ActivationRequestServiceImpl;
+import com.itq.proyecto.domain.servicio.impl.CitaServicioImpl;
 import com.itq.proyecto.repositorio.RepositorioActivationRequest;
+import com.itq.proyecto.repositorio.RepositorioCita;
 import com.itq.proyecto.repositorio.RepositorioMascota;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
@@ -45,6 +48,13 @@ public class ConfiguracionVeterinaria {
     @Bean
    public ActivationRequestService activationService(RepositorioActivationRequest repositorioActivationRequest){
         return new ActivationRequestServiceImpl(repositorioActivationRequest);
+    }
+
+    @Bean
+    public CitaServicio citaServicio(RepositorioCita repositorioCita,
+                                     RepositorioMascota repositorioMascota,
+                                     RepositorioUsuario repositorioUsuario){
+        return new CitaServicioImpl(repositorioCita, repositorioMascota, repositorioUsuario);
     }
 
     @Configuration
