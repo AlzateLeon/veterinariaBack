@@ -31,15 +31,15 @@ public class CitaMedica {
     @Column(name = "HORA", nullable = false)
     private String hora;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "MASCOTA", nullable = false)
     private Mascota mascota;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "VETERINARIO", nullable = true)
     private Usuario veterinario;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "VACUNA", nullable = true)
     private Vacuna vacuna;
 
@@ -51,7 +51,7 @@ public class CitaMedica {
     @Column(name = "ESTADO_CITA", nullable = false)
     private EstadoCitaMedicaEnum estadoCitaMedicaEnum;
 
-    @Column(name = "ID_USER", nullable = false)
+    @Column(name = "ID_USER", nullable = true)
     private Long idUser;
 
 }
