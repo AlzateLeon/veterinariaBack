@@ -25,4 +25,6 @@ public class CitaMedicaDTO {
     private String nombreVeterinario;
     private EstadoCitaMedicaEnum estadoCitaMedicaEnum;
     private TipoCitaMascotaEnum tipoCitaMascotaEnum;
+    private String nombreVacuna;
+    private String observaciones;
 }

@@ -1,6 +1,7 @@
 package com.itq.proyecto.controladores.controlador;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
+import com.itq.proyecto.domain.dtos.citamedica.CitaMedicaDTO;
 import com.itq.proyecto.domain.dtos.citamedica.ConsultasCitasUserOutDTO;
 import com.itq.proyecto.domain.dtos.citamedica.CreacionCitaInDTO;
 import com.itq.proyecto.domain.servicio.CitaServicio;
@@ -36,4 +37,12 @@ public class CitaContolador {
     ){
         return citaServicio.consultarCitasUsuario(idUser);
     }
+
+    @RequestMapping(value = "/cancelarCita", method = RequestMethod.POST)
+    public ResultadoDTO cancelarCita(
+            @RequestBody CitaMedicaDTO cita
+    ){
+        return citaServicio.cancelarCita(cita.getId());
+    }
+
 }

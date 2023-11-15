@@ -8,4 +8,6 @@ public interface CitaServicio {
     ResultadoDTO crearCita(CreacionCitaInDTO creacionCitaInDTO);
 
     ConsultasCitasUserOutDTO consultarCitasUsuario(Long idUser);
+
+    ResultadoDTO cancelarCita(Long idCita);
 }

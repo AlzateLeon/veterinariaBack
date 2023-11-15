@@ -85,6 +85,9 @@ public class CitaServicioImpl implements CitaServicio {
                             cita.getVeterinario().getNombre(): "");
                     citaMedicaDTO.setNombreMascota(cita.getMascota().getNombre());
                     citaMedicaDTO.setTipoCitaMascotaEnum(cita.getTipoCitaMascotaEnum());
+                    citaMedicaDTO.setNombreVacuna(cita.getVacuna()!= null ?
+                            cita.getVacuna().getNombre() : "");
+                    citaMedicaDTO.setObservaciones(cita.getObservaciones());
 
                     citasDTO.add(citaMedicaDTO);
                 }
@@ -97,5 +100,25 @@ public class CitaServicioImpl implements CitaServicio {
         }
 
         return consultasCitasUserOutDTO;
+    }
+
+    @Override
+    public ResultadoDTO cancelarCita(Long idCita) {
+        ResultadoDTO resultadoDTO = new ResultadoDTO();
+        resultadoDTO.setExitoso(true);
+
+        try {
+            Optional<CitaMedica> citaOptional = repositorioCita.findById(idCita);
+
+            if (citaOptional.isPresent()){
+                CitaMedica cita = citaOptional.get();
+                cita.setEstadoCitaMedicaEnum(EstadoCitaMedicaEnum.CANCELADA);
+                repositorioCita.save(cita);
+            }
+        } catch (Exception e){
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje("Error al cancelar la cita, causa: " + e.getMessage());
+        }
+        return resultadoDTO;
     }
 }

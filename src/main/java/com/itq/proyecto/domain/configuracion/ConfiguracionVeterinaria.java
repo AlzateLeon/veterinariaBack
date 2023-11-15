@@ -35,8 +35,9 @@ public class ConfiguracionVeterinaria {
     @Primary
     public CreacionUsuarioServicio crearUsuarioServicio(RepositorioUsuario repositorioUsuario,
                                                         JavaMailSender javaMailSender,
-                                                        RepositorioActivationRequest repositorioActivationRequest){
-        return new CreacionUsuarioServicioImpl(repositorioUsuario, javaMailSender , repositorioActivationRequest);
+                                                        RepositorioActivationRequest repositorioActivationRequest,
+                                                        RepositorioCita repositorioCita){
+        return new CreacionUsuarioServicioImpl(repositorioUsuario, javaMailSender , repositorioActivationRequest, repositorioCita);
     }
 
     @Bean

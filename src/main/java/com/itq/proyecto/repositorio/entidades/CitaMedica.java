@@ -54,4 +54,7 @@ public class CitaMedica {
     @Column(name = "ID_USER", nullable = true)
     private Long idUser;
 
+    @Column(name = "OBSERVACION", nullable = true)
+    private String observaciones;
+
 }

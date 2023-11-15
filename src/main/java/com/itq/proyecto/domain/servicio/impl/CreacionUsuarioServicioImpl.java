@@ -3,8 +3,10 @@ package com.itq.proyecto.domain.servicio.impl;
 import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.usuario.*;
+import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
 import com.itq.proyecto.domain.servicio.ActivationRequestService;
 import com.itq.proyecto.repositorio.RepositorioActivationRequest;
+import com.itq.proyecto.repositorio.RepositorioCita;
 import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
@@ -27,6 +29,8 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
     //private ActivationRequestService activationRequestService;
     private RepositorioActivationRequest repositorioActivationRequest;
+
+    private RepositorioCita repositorioCita;
 
 
     @Override
@@ -84,6 +88,9 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         userDTO.setActivo(userEntity.isActivo());
         userDTO.setCantidadMascotas(userEntity.getMascotas().size());
         userDTO.setImagenUser(userEntity.getImagen());
+        userDTO.setCitasPendientes(repositorioCita.
+                countByEstadoCitaMedicaEnumAndIdUser(EstadoCitaMedicaEnum.PROGRAMADA,
+                        userEntity.getIdUser()));
 
         return userDTO;
     }

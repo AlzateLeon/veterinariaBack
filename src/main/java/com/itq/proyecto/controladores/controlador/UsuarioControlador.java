@@ -25,6 +25,7 @@ public class UsuarioControlador {
         CreacionUsuarioOutDTO creacionUsuario = creacionUsuarioServicio.crearUsuario(creacionUsuarioIn);
         return creacionUsuario;
     }
+
     @RequestMapping(value = "/crearVeterinario", method = RequestMethod.POST)
     public ResultadoDTO crearUsuarioVeterinario(
             @RequestBody CreacionUsuarioIn creacionUsuarioIn
@@ -32,13 +33,11 @@ public class UsuarioControlador {
         return creacionUsuarioServicio.crearVeterinario(creacionUsuarioIn);
     }
 
-
     @GetMapping
     public UsuarioDTO consultarUsuario(
         String correo, String contrasena
     ){
         return creacionUsuarioServicio.consutarUsuarioExistenteCorreoContraena(correo, contrasena);
-
     }
 
     @RequestMapping(value = "/editarUsuario", method = RequestMethod.POST)
