@@ -42,8 +42,9 @@ public class ConfiguracionVeterinaria {
 
     @Bean
     public CreacionMascotaServicio crearMascotaService(RepositorioMascota repositorioMascota,
-                                                       RepositorioUsuario repositorioUsuario){
-        return new CreacionMascotaServicioImpl(repositorioMascota, repositorioUsuario);
+                                                       RepositorioUsuario repositorioUsuario,
+                                                       RepositorioCita repositorioCita){
+        return new CreacionMascotaServicioImpl(repositorioMascota, repositorioUsuario, repositorioCita);
     }
 
     @Bean

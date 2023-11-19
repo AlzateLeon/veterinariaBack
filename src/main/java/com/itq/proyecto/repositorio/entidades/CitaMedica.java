@@ -54,6 +54,10 @@ public class CitaMedica {
     @Column(name = "ID_USER", nullable = true)
     private Long idUser;
 
+    @ManyToOne
+    @JoinColumn(name = "USUARIO", nullable = false)
+    private Usuario usuario;
+
     @Column(name = "OBSERVACION", nullable = true)
     private String observaciones;
 

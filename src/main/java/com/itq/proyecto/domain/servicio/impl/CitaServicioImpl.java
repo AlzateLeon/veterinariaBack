@@ -2,6 +2,7 @@ package com.itq.proyecto.domain.servicio.impl;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.citamedica.CitaMedicaDTO;
+import com.itq.proyecto.domain.dtos.citamedica.ConsultaCitaFiltrosInDTO;
 import com.itq.proyecto.domain.dtos.citamedica.ConsultasCitasUserOutDTO;
 import com.itq.proyecto.domain.dtos.citamedica.CreacionCitaInDTO;
 import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
@@ -47,6 +48,7 @@ public class CitaServicioImpl implements CitaServicio {
             citaMedica.setTipoCitaMascotaEnum(creacionCitaInDTO.getTipoCitaMascotaEnum());
             citaMedica.setHora(creacionCitaInDTO.getHora());
             citaMedica.setIdUser(creacionCitaInDTO.getIdUser());
+            citaMedica.setUsuario(repositorioUsuario.findByIdUser(creacionCitaInDTO.getIdUser()).get());
 
             if (creacionCitaInDTO.getIdVeterinario() != null){
                 Optional<Usuario> vet =  repositorioUsuario.
@@ -76,19 +78,7 @@ public class CitaServicioImpl implements CitaServicio {
 
             if (!citas.isEmpty()){
                 for(CitaMedica cita : citas){
-                    CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO();
-                    citaMedicaDTO.setId(cita.getId());
-                    citaMedicaDTO.setHora(cita.getHora());
-                    citaMedicaDTO.setEstadoCitaMedicaEnum(cita.getEstadoCitaMedicaEnum());
-                    citaMedicaDTO.setFecha(cita.getFecha());
-                    citaMedicaDTO.setNombreVeterinario(cita.getVeterinario() != null ?
-                            cita.getVeterinario().getNombre(): "");
-                    citaMedicaDTO.setNombreMascota(cita.getMascota().getNombre());
-                    citaMedicaDTO.setTipoCitaMascotaEnum(cita.getTipoCitaMascotaEnum());
-                    citaMedicaDTO.setNombreVacuna(cita.getVacuna()!= null ?
-                            cita.getVacuna().getNombre() : "");
-                    citaMedicaDTO.setObservaciones(cita.getObservaciones());
-
+                    CitaMedicaDTO citaMedicaDTO =  convertirCitacitaDTO(cita);
                     citasDTO.add(citaMedicaDTO);
                 }
             }
@@ -100,6 +90,23 @@ public class CitaServicioImpl implements CitaServicio {
         }
 
         return consultasCitasUserOutDTO;
+    }
+
+    private CitaMedicaDTO convertirCitacitaDTO(CitaMedica cita) {
+        CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO();
+        citaMedicaDTO.setId(cita.getId());
+        citaMedicaDTO.setHora(cita.getHora());
+        citaMedicaDTO.setEstadoCitaMedicaEnum(cita.getEstadoCitaMedicaEnum());
+        citaMedicaDTO.setFecha(cita.getFecha());
+        citaMedicaDTO.setNombreVeterinario(cita.getVeterinario() != null ?
+                cita.getVeterinario().getNombre(): "");
+        citaMedicaDTO.setNombreMascota(cita.getMascota().getNombre());
+        citaMedicaDTO.setTipoCitaMascotaEnum(cita.getTipoCitaMascotaEnum());
+        citaMedicaDTO.setNombreVacuna(cita.getVacuna()!= null ?
+                cita.getVacuna().getNombre() : "");
+        citaMedicaDTO.setObservaciones(cita.getObservaciones());
+
+        return citaMedicaDTO;
     }
 
     @Override
@@ -118,6 +125,33 @@ public class CitaServicioImpl implements CitaServicio {
         } catch (Exception e){
             resultadoDTO.setExitoso(false);
             resultadoDTO.setMensaje("Error al cancelar la cita, causa: " + e.getMessage());
+        }
+        return resultadoDTO;
+    }
+
+
+    @Override
+    public ConsultasCitasUserOutDTO consultarCitasFiltros(ConsultaCitaFiltrosInDTO inDTO) {
+        ConsultasCitasUserOutDTO resultadoDTO = new ConsultasCitasUserOutDTO();
+        resultadoDTO.setExitoso(true);
+
+        try {
+
+            List<CitaMedicaDTO> listaCitasMedicas = new ArrayList<>();
+            List<CitaMedica> citas = repositorioCita.buscarCitasPorParametros(
+                    inDTO.getFecha(), inDTO.getCedula());
+
+            if (!citas.isEmpty()){
+                for (CitaMedica cita:
+                     citas) {
+                    listaCitasMedicas.add(convertirCitacitaDTO(cita));
+                }
+            }
+
+            resultadoDTO.setListaCitasMedicas(listaCitasMedicas);
+        } catch (Exception e){
+            resultadoDTO.setExitoso(false);
+            resultadoDTO.setMensaje("Error al consultar las citas, causa: " + e.getMessage());
         }
         return resultadoDTO;
     }

@@ -1,11 +1,14 @@
 package com.itq.proyecto.domain.servicio.impl;
 
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
+import com.itq.proyecto.domain.dtos.citamedica.CitaMedicaDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
 import com.itq.proyecto.domain.dtos.mascota.CreacionMascotaInDTO;
 import com.itq.proyecto.domain.dtos.mascota.EditarMascotaInDTO;
 import com.itq.proyecto.domain.dtos.mascota.MascotaDTO;
 import com.itq.proyecto.domain.enums.TipoMascota;
+import com.itq.proyecto.repositorio.RepositorioCita;
+import com.itq.proyecto.repositorio.entidades.CitaMedica;
 import com.itq.proyecto.repositorio.entidades.Mascota;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
 import com.itq.proyecto.repositorio.RepositorioMascota;
@@ -29,6 +32,8 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
 
     @Autowired
     private RepositorioUsuario repositorioUsuario;
+
+    private RepositorioCita repositorioCita;
 
     private static final Logger logger = LogManager.getLogger(CreacionMascotaServicioImpl.class);
 
@@ -83,6 +88,20 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
                     mascotaDTO.setId(mascota.getIdMascota());
                     mascotaDTO.setNombre(mascota.getNombre());
                     mascotaDTO.setImagenMascota(mascota.getImagen());
+                    List<CitaMedica> citas =  repositorioCita.findAllByMascota(mascota);
+                    List<CitaMedicaDTO> listaServicios = new ArrayList<>();
+                    if (!citas.isEmpty()){
+                        for (CitaMedica citaMedica:citas) {
+                            CitaMedicaDTO citaMedicaDTO = new CitaMedicaDTO();
+                            citaMedicaDTO.setNombreVacuna(citaMedica.getVacuna() != null ?
+                                    citaMedica.getVacuna().getNombre() : "");
+                            citaMedicaDTO.setNombreVeterinario(citaMedica.getVeterinario() != null ?
+                                    citaMedica.getVeterinario().getNombre() : "");
+                            citaMedicaDTO.setFecha(citaMedica.getFecha());
+                            listaServicios.add(citaMedicaDTO);
+                        }
+                    }
+                    mascotaDTO.setListaServicios(listaServicios);
 
                     mascotasDTO.add(mascotaDTO);
                 }
