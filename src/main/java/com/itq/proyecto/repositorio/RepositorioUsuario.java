@@ -15,4 +15,6 @@ public interface  RepositorioUsuario extends JpaRepository<Usuario, Long> {
 
     Optional<Usuario> findByIdUser(Long idUser);
 
+    Optional<Usuario> findByCedula(String cedula);
+
 }

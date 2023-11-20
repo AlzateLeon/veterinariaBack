@@ -37,7 +37,6 @@ public class MascotaControlador {
             Long idUser
     ){
         return creacionMascotaServicio.consutarMascotasPorUsuario(idUser);
-
     }
 
     @RequestMapping(value = "/editarMascota", method = RequestMethod.POST)

@@ -22,6 +22,7 @@ public class CitaMedicaDTO {
     private LocalDate fecha;
     private String hora;
     private String nombreMascota;
+    private String nombreUsuario;
     private String nombreVeterinario;
     private EstadoCitaMedicaEnum estadoCitaMedicaEnum;
     private TipoCitaMascotaEnum tipoCitaMascotaEnum;

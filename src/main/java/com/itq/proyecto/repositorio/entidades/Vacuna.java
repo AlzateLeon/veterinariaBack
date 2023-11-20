@@ -25,4 +25,7 @@ public class Vacuna {
     @Column(nullable = false, name = "TIPO_MASCOTA")
     private TipoMascota tipoMascota;
 
+    @Column(nullable = true, name = "OBSERVACION")
+    private String observaciones;
+
 }

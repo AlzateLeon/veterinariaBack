@@ -3,6 +3,7 @@ package com.itq.proyecto.repositorio;
 import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
 import com.itq.proyecto.repositorio.entidades.CitaMedica;
 import com.itq.proyecto.repositorio.entidades.Mascota;
+import org.kolobok.annotation.FindWithOptionalParams;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -21,8 +22,15 @@ public interface RepositorioCita extends JpaRepository<CitaMedica, Long> {
 
     List<CitaMedica> findAllByMascota(Mascota mascota);
 
-    @Query(" SELECT c FROM CitaMedica c join fetch c.usuario u " +
-            " WHERE (:fecha IS NULL OR c.fecha = :fecha) " +
-            " AND (:cedula IS NULL OR u.cedula = :cedula) ")
-    List<CitaMedica> buscarCitasPorParametros(@Param("fecha") LocalDate fecha, String cedula);
+    @FindWithOptionalParams
+    List<CitaMedica> findAllByFechaAndIdUserAndEstadoCitaMedicaEnum(
+            LocalDate fecha, Long idUser, EstadoCitaMedicaEnum estado);
+
+    @Query("SELECT c FROM CitaMedica c " +
+            " WHERE (:param1 IS NULL OR c.fecha = :param1) " +
+            " AND (:param2 IS NULL OR c.idUser = :param2)  " +
+            " AND (:param3 IS NULL OR c.estadoCitaMedicaEnum = :param3) ")
+    List<CitaMedica> buscarPorParametros(@Param("param1") LocalDate fecha,
+                                         @Param("param2") Long idUser,
+                                         @Param("param3") EstadoCitaMedicaEnum estado);
 }

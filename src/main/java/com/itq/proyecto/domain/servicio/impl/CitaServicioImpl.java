@@ -105,6 +105,8 @@ public class CitaServicioImpl implements CitaServicio {
         citaMedicaDTO.setNombreVacuna(cita.getVacuna()!= null ?
                 cita.getVacuna().getNombre() : "");
         citaMedicaDTO.setObservaciones(cita.getObservaciones());
+        citaMedicaDTO.setNombreUsuario(cita.getUsuario() != null ?
+                cita.getUsuario().getNombre() : "");
 
         return citaMedicaDTO;
     }
@@ -138,8 +140,13 @@ public class CitaServicioImpl implements CitaServicio {
         try {
 
             List<CitaMedicaDTO> listaCitasMedicas = new ArrayList<>();
-            List<CitaMedica> citas = repositorioCita.buscarCitasPorParametros(
-                    inDTO.getFecha(), inDTO.getCedula());
+            Long idUser = null;
+            Optional<Usuario> usuario = repositorioUsuario.findByCedula(inDTO.getCedula());
+            if (usuario.isPresent()){
+                idUser = usuario.get().getIdUser();
+            }
+            List<CitaMedica> citas = repositorioCita.buscarPorParametros(
+                    inDTO.getFecha(), idUser, inDTO.getEstado());
 
             if (!citas.isEmpty()){
                 for (CitaMedica cita:

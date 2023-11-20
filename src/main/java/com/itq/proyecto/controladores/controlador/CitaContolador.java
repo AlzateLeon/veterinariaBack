@@ -48,7 +48,7 @@ public class CitaContolador {
 
     @RequestMapping(value = "/consultarCitasFiltros", method = RequestMethod.POST)
     public ConsultasCitasUserOutDTO consultarCitasFiltros(
-            ConsultaCitaFiltrosInDTO inDTO
+            @RequestBody ConsultaCitaFiltrosInDTO inDTO
     ){
         return citaServicio.consultarCitasFiltros(inDTO);
     }

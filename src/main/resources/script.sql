@@ -15,5 +15,5 @@ INSERT INTO VACUNA(ID, NOMBRE, TIPO_MASCOTA)
 --citas de mascota de ejempl
 INSERT INTO CITA_MEDICA(ID, FECHA, HORA, MASCOTA, VETERINARIO ,VACUNA, TIPO_PROCESO, ESTADO_CITA, ID_USER, OBSERVACION, USUARIO)
     VALUES (-1, '2023-01-17','10:30', -1, null, -1, 'VACUNACION', 'PROGRAMADA', -2, '', -2),
-           (-2, '2023-12-21','10:30', -2, null, -1, 'VACUNACION', 'PROGRAMADA', -2, 'Mascota con cita pendiente desde el año pasado', -2);
+           (-2, '2023-12-21','10:30', -2, null, -1, 'VACUNACION', 'CANCELADA', -2, 'Mascota con cita pendiente desde el año pasado', -2);
 

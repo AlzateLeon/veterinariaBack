@@ -44,6 +44,9 @@ dependencies {
 	// https://mvnrepository.com/artifact/com.mysql/mysql-connector-j
 	runtimeOnly 'com.mysql:mysql-connector-j'
 
+	//optional en spring data
+	compileOnly 'com.github.ukman:kolobok:0.1.5'
+
 }
 
 tasks.named('test') {

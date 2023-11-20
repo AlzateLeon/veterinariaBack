@@ -8,9 +8,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @NoArgsConstructor
-public class CreacionVacunaInDTO {
+    public class ConsultaVacunafiltrosInDTO {
 
-    private String nombre;
     private TipoMascota tipoMascota;
-    private String observaciones;
 }
