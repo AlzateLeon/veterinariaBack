@@ -22,10 +22,6 @@ public interface RepositorioCita extends JpaRepository<CitaMedica, Long> {
 
     List<CitaMedica> findAllByMascota(Mascota mascota);
 
-    @FindWithOptionalParams
-    List<CitaMedica> findAllByFechaAndIdUserAndEstadoCitaMedicaEnum(
-            LocalDate fecha, Long idUser, EstadoCitaMedicaEnum estado);
-
     @Query("SELECT c FROM CitaMedica c " +
             " WHERE (:param1 IS NULL OR c.fecha = :param1) " +
             " AND (:param2 IS NULL OR c.idUser = :param2)  " +

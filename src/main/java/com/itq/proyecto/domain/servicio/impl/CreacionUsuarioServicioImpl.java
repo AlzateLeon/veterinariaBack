@@ -4,6 +4,7 @@ import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.usuario.*;
 import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
+import com.itq.proyecto.domain.enums.TipoUsuarioEnum;
 import com.itq.proyecto.domain.servicio.ActivationRequestService;
 import com.itq.proyecto.repositorio.RepositorioActivationRequest;
 import com.itq.proyecto.repositorio.RepositorioCita;
@@ -16,7 +17,9 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -79,6 +82,15 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         }
 
         Usuario userEntity = usuario.get();
+        userDTO = crearUsuarioDTO(userEntity);
+
+        return userDTO;
+    }
+
+    private UsuarioDTO crearUsuarioDTO(Usuario userEntity) {
+
+        UsuarioDTO userDTO = new UsuarioDTO();
+        userDTO.setExitoso(true);
         userDTO.setNombre(userEntity.getNombre());
         userDTO.setIdUser(userEntity.getIdUser());
         userDTO.setCorreo(userEntity.getCorreo());
@@ -91,7 +103,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         userDTO.setCitasPendientes(repositorioCita.
                 countByEstadoCitaMedicaEnumAndIdUser(EstadoCitaMedicaEnum.PROGRAMADA,
                         userEntity.getIdUser()));
-
+        
         return userDTO;
     }
 
@@ -215,5 +227,30 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
         return resultadoDTO;
 
+    }
+
+    @Override
+    public ConsultaUsuariosFiltrosOutDTO consultarCitasFiltros(ConsultaUsuariosFiltrosInDTO inDTO) {
+        ConsultaUsuariosFiltrosOutDTO consultaUsuariosFiltrosOutDTO = new ConsultaUsuariosFiltrosOutDTO();
+        consultaUsuariosFiltrosOutDTO.setExitoso(true);
+
+        try{
+            List<UsuarioDTO> usuarioDTOS = new ArrayList<>();
+            List<Usuario> usuarios =  repositorioUsuario.consultarUsuariosPorCedulaONombre(
+                    inDTO.getCedula(), inDTO.getNombre(), TipoUsuarioEnum.DUENO_MASCOTA);
+            
+            if (!usuarios.isEmpty()){
+                for (Usuario user :
+                        usuarios) {
+                    usuarioDTOS.add(crearUsuarioDTO(user));
+                }
+            }
+
+            consultaUsuariosFiltrosOutDTO.setUsuarios(usuarioDTOS);
+        } catch (Exception e){
+            consultaUsuariosFiltrosOutDTO.setExitoso(false);
+            consultaUsuariosFiltrosOutDTO.setMensaje(e.getMessage());
+        }
+        return  consultaUsuariosFiltrosOutDTO;
     }
 }

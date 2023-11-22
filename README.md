@@ -24,7 +24,14 @@ Backend de un proyecto de veterinaria en springBoot, en el cual se pueden crear 
 * http://localhost:8080/veterinaria/swagger-ui/index.html
 
 ### Pendientes
-- [ ] Implementar modulo de vacunación
-- [ ] Implementar módulo de administrador
+- [X] Implementar modulo de vacunación
+- [X] Implementar módulo de administrador
 - [ ] Implementar una base de datos diferente a la de H2
+
+### Pendientes cliente
+- [ ] Implementar que las citas se pongan solo cada media hora
+- [ ] Poder agendar citas desde el panel de administración
+- [ ] Mostrar la hora en la lista de citas (panel administración)
+- [ ] implementar unidades disponibles por cada vacuna
+- [ ] Mostrar la información de cada usuario y sus mascotas (panel administración)
 

@@ -81,7 +81,7 @@ public class VacunaServcioImpl implements VacunaServicio {
 
         try{
             if (inDTO.getTipoMascota() != null){
-               listaVacunas =  repositorioVacuna.findAllByTipoMascota(inDTO.getTipoMascota());
+               listaVacunas =  repositorioVacuna.consultarVacunasTipoMascota(inDTO.getTipoMascota());
             }
             else{
                 listaVacunas = repositorioVacuna.findAll();

@@ -2,6 +2,8 @@ package com.itq.proyecto.controladores.controlador;
 
 import com.itq.proyecto.domain.activationrequest.ActivationRequest;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
+import com.itq.proyecto.domain.dtos.citamedica.ConsultaCitaFiltrosInDTO;
+import com.itq.proyecto.domain.dtos.citamedica.ConsultasCitasUserOutDTO;
 import com.itq.proyecto.domain.dtos.usuario.*;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import org.springframework.http.ResponseEntity;
@@ -60,4 +62,12 @@ public class UsuarioControlador {
 
         return creacionUsuarioServicio.activarCuenta(activarCuentaDTO);
     }
+
+    @RequestMapping(value = "/consultarUsuariosFiltros", method = RequestMethod.POST)
+    public ConsultaUsuariosFiltrosOutDTO consultarUsuariosFiltros(
+            @RequestBody ConsultaUsuariosFiltrosInDTO inDTO
+    ){
+        return creacionUsuarioServicio.consultarCitasFiltros(inDTO);
+    }
+
 }

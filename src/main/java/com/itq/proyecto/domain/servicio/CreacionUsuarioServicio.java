@@ -18,5 +18,6 @@ public interface CreacionUsuarioServicio {
 
     public ResultadoDTO activarCuenta(ActivarCuentaDTO activarCuentaDTO);
 
+    ConsultaUsuariosFiltrosOutDTO consultarCitasFiltros(ConsultaUsuariosFiltrosInDTO inDTO);
 }
 
