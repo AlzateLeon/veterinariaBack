@@ -38,6 +38,7 @@ public class VacunaServcioImpl implements VacunaServicio {
             vacuna.setNombre(creacionIn.getNombre());
             vacuna.setTipoMascota(creacionIn.getTipoMascota());
             vacuna.setObservaciones(creacionIn.getObservaciones());
+            vacuna.setUnidades(creacionIn.getUnidadades());
             repositorioVacuna.save(vacuna);
 
         } catch (Exception e) {
@@ -104,7 +105,8 @@ public class VacunaServcioImpl implements VacunaServicio {
         vacunaDTO.setId(vacuna.getId());
         vacunaDTO.setNombre(vacuna.getNombre());
         vacunaDTO.setTipoMascota(vacuna.getTipoMascota());
-        vacunaDTO.setObservaciones(vacunaDTO.getObservaciones());
+        vacunaDTO.setObservaciones(vacuna.getObservaciones());
+        vacunaDTO.setUnidadDisponible(vacuna.getUnidades());
 
         return  vacunaDTO;
     }

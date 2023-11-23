@@ -28,4 +28,7 @@ public class Vacuna {
     @Column(nullable = true, name = "OBSERVACION")
     private String observaciones;
 
+    @Column(nullable = true, name = "UNIDADES")
+    private Integer unidades;
+
 }

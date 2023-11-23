@@ -19,4 +19,5 @@ public class CreacionCitaInDTO {
     private LocalDate fecha;
     private String hora;
     private TipoCitaMascotaEnum tipoCitaMascotaEnum;
+    private String observacion;
 }

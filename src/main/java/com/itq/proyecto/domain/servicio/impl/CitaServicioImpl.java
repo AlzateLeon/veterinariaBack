@@ -49,6 +49,7 @@ public class CitaServicioImpl implements CitaServicio {
             citaMedica.setHora(creacionCitaInDTO.getHora());
             citaMedica.setIdUser(creacionCitaInDTO.getIdUser());
             citaMedica.setUsuario(repositorioUsuario.findByIdUser(creacionCitaInDTO.getIdUser()).get());
+            citaMedica.setObservaciones(creacionCitaInDTO.getObservacion());
 
             if (creacionCitaInDTO.getIdVeterinario() != null){
                 Optional<Usuario> vet =  repositorioUsuario.
@@ -107,6 +108,7 @@ public class CitaServicioImpl implements CitaServicio {
         citaMedicaDTO.setObservaciones(cita.getObservaciones());
         citaMedicaDTO.setNombreUsuario(cita.getUsuario() != null ?
                 cita.getUsuario().getNombre() : "");
+        citaMedicaDTO.setObservaciones(cita.getObservaciones());
 
         return citaMedicaDTO;
     }
@@ -120,7 +122,14 @@ public class CitaServicioImpl implements CitaServicio {
             Optional<CitaMedica> citaOptional = repositorioCita.findById(idCita);
 
             if (citaOptional.isPresent()){
+
                 CitaMedica cita = citaOptional.get();
+
+                if (cita.getEstadoCitaMedicaEnum().equals(EstadoCitaMedicaEnum.CANCELADA)){
+                    resultadoDTO.setExitoso(false);
+                    resultadoDTO.setMensaje("La cita ya se encuentra cancelada");
+                    return resultadoDTO;
+                }
                 cita.setEstadoCitaMedicaEnum(EstadoCitaMedicaEnum.CANCELADA);
                 repositorioCita.save(cita);
             }

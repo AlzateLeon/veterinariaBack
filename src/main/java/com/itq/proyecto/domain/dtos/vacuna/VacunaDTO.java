@@ -17,4 +17,5 @@ public class VacunaDTO {
     private String nombre;
     private String observaciones;
     private TipoMascota tipoMascota;
+    private int unidadDisponible;
 }
