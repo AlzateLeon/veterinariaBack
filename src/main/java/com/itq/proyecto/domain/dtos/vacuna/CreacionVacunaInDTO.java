@@ -14,4 +14,6 @@ public class CreacionVacunaInDTO {
     private TipoMascota tipoMascota;
     private String observaciones;
     private int unidadades;
+
+    private Long idVacuna;
 }

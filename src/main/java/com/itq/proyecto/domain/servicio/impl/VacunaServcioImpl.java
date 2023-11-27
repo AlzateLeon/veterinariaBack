@@ -32,7 +32,7 @@ public class VacunaServcioImpl implements VacunaServicio {
         ResultadoDTO resultadoDTO = new ResultadoDTO();
         resultadoDTO.setExitoso(true);
 
-        try{
+        try {
 
             Vacuna vacuna = new Vacuna();
             vacuna.setNombre(creacionIn.getNombre());
@@ -55,7 +55,7 @@ public class VacunaServcioImpl implements VacunaServicio {
         ResultadoDTO resultadoDTO = new ResultadoDTO();
         resultadoDTO.setExitoso(true);
 
-        try{
+        try {
 
             //se actualiza la cita
             Optional<CitaMedica> cita = repositorioCita.
@@ -80,15 +80,14 @@ public class VacunaServcioImpl implements VacunaServicio {
         List<Vacuna> listaVacunas = new ArrayList<>();
         List<VacunaDTO> listaVacunasDTO = new ArrayList<>();
 
-        try{
-            if (inDTO.getTipoMascota() != null){
-               listaVacunas =  repositorioVacuna.consultarVacunasTipoMascota(inDTO.getTipoMascota());
-            }
-            else{
+        try {
+            if (inDTO.getTipoMascota() != null) {
+                listaVacunas = repositorioVacuna.consultarVacunasTipoMascota(inDTO.getTipoMascota());
+            } else {
                 listaVacunas = repositorioVacuna.findAll();
             }
 
-            for (Vacuna vacuna: listaVacunas) {
+            for (Vacuna vacuna : listaVacunas) {
                 listaVacunasDTO.add(convertirVacunaVacunaDTO(vacuna));
             }
 
@@ -97,8 +96,35 @@ public class VacunaServcioImpl implements VacunaServicio {
             outDTO.setExitoso(false);
             outDTO.setMensaje("Error al consultar las vacunas, causa: " + e.getMessage());
         }
-        return  outDTO;
+        return outDTO;
     }
+
+    @Override
+    public ResultadoDTO editarVacuna(CreacionVacunaInDTO creacionIn) {
+        ResultadoDTO outDTO =  new ResultadoDTO();
+        outDTO.setExitoso(true);
+
+        try{
+            if(creacionIn.getIdVacuna()!=null) {
+                Optional<Vacuna> vacunaOpt = repositorioVacuna.findById(creacionIn.getIdVacuna());
+                if (vacunaOpt.isPresent()) {
+                    Vacuna vacuna = new Vacuna();
+                    vacuna.setNombre(creacionIn.getNombre());
+                    vacuna.setTipoMascota(creacionIn.getTipoMascota());
+                    vacuna.setObservaciones(creacionIn.getObservaciones());
+                    vacuna.setUnidades(creacionIn.getUnidadades());
+                    vacuna.setId(creacionIn.getIdVacuna());
+                    repositorioVacuna.save(vacuna);
+                }
+            }
+            } catch (Exception e) {
+                outDTO.setExitoso(false);
+                outDTO.setMensaje("Error al editar la vacuna, causa: " + e.getMessage());
+            }
+            return outDTO;
+    }
+
+
 
     private VacunaDTO convertirVacunaVacunaDTO(Vacuna vacuna) {
         VacunaDTO vacunaDTO = new VacunaDTO();

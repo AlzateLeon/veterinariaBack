@@ -13,4 +13,6 @@ public interface VacunaServicio {
     ResultadoDTO aplicarVacuna(AplicacionVacunaInDTO aplicacionVacunaInDTO);
 
     ConsultaVacunafiltrosOutDTO consultarVacunasFiltros(ConsultaVacunafiltrosInDTO inDTO);
+
+    ResultadoDTO editarVacuna(CreacionVacunaInDTO creacionVacunaInDTO);
 }

@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("vacuna")
-@CrossOrigin(origins = "http://localhost:4200")
 public class VacunaControlador {
 
     private final VacunaServicio vacunaServicio;
@@ -39,6 +38,14 @@ public class VacunaControlador {
             @RequestBody ConsultaVacunafiltrosInDTO inDTO
     ){
         return vacunaServicio.consultarVacunasFiltros(inDTO);
+    }
+
+    @RequestMapping(value = "/editarVacuna", method = RequestMethod.POST)
+    public ResultadoDTO editarVacuna(
+            @RequestBody CreacionVacunaInDTO creacionVacunaInDTO
+    ) {
+        return vacunaServicio.editarVacuna(creacionVacunaInDTO);
+
     }
 
 }

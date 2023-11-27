@@ -88,6 +88,8 @@ public class CreacionMascotaServicioImpl implements CreacionMascotaServicio {
                     mascotaDTO.setId(mascota.getIdMascota());
                     mascotaDTO.setNombre(mascota.getNombre());
                     mascotaDTO.setImagenMascota(mascota.getImagen());
+                    mascotaDTO.setObservacion(mascota.getObservacion());
+
                     List<CitaMedica> citas =  repositorioCita.findAllByMascota(mascota);
                     List<CitaMedicaDTO> listaServicios = new ArrayList<>();
                     if (!citas.isEmpty()){

@@ -4,7 +4,6 @@ import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.mascota.ConsultaMascotasUsuarioOutDTO;
 import com.itq.proyecto.domain.dtos.mascota.CreacionMascotaInDTO;
 import com.itq.proyecto.domain.dtos.mascota.EditarMascotaInDTO;
-import com.itq.proyecto.domain.dtos.usuario.EditarUsuarioMascotaInDTO;
 import com.itq.proyecto.domain.servicio.CreacionMascotaServicio;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -12,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequestMapping("mascota")
-@CrossOrigin(origins = "http://localhost:4200")
 public class MascotaControlador {
 
     private final CreacionMascotaServicio creacionMascotaServicio;

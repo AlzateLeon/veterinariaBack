@@ -8,7 +8,7 @@ Backend de un proyecto de veterinaria en springBoot, en el cual se pueden crear 
 * Script inicial para tener datos desde que se inicia la aplicacion y asi tener un usuario de prueba y un "administrador" del sistema (cuando se usa H2 para no tener que repetir procesos)
 * Implementación de validacion de cuenta a traves de correo electronico
 * Implementación de carga de imagenes tanto de mascotas como de los usuarios almacenandose en un campo @Lob de la tabla de la BD
-* Implementacion de css nano
+* Implementacion de purgeCss para eliminacion de css no usado
 
 ### Usar la base de datos MySQL
 1. Se debe descargar docker
@@ -24,17 +24,20 @@ Backend de un proyecto de veterinaria en springBoot, en el cual se pueden crear 
 ### Ver documentacion de controladores,(cuando esta desplegado) 
 * http://localhost:8080/veterinaria/swagger-ui/index.html
 
-## Desplegar aplicacion backend y front end con tomcat
+## como probar con multiples computadores, teniendo este como servidor:
+
 ### Backend
-1. Empaqueta tu aplicación Spring Boot: en la raiz del proyecto
+1. Empaquetar la aplicación Spring Boot: en la raiz del proyecto
 * maven -> mvn clean install
-* gradle -> ./gradlew bootJar, se crea en build/libs/tu-aplicacion.jar
+* gradle -> ./gradlew war, se crea en build/libs/tu-aplicacion.war
 2. Definirle un puerto (8080) en el application.properties o application.yml:
 * Asegurarnos que la aplicacion despliegue correctamente
 
 ### Frontend
-1. construir proyecto angular, desde la raiz ejecutar: ng build
-2. Copia los archivos generados a Tomcat:
+1. se instala -> npm install -g http-server
+2. construir proyecto angular, desde la raiz ejecutar: ng build --configuration production
+3. desplegar el servidor en la carpeta dist/tu-app -> http-server -p 8085 -a 0.0.0.0 -o
+* Esto generara un servidor http que nos permitira funcionar como un servidor
 
 ### Pendientes
 - [X] Implementar modulo de vacunación

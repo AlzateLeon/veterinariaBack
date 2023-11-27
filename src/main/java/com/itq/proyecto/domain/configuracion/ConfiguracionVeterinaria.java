@@ -67,7 +67,7 @@ public class ConfiguracionVeterinaria {
                 @Override
                 public void addCorsMappings(CorsRegistry registry) {
                     registry.addMapping("/**")
-                            .allowedOrigins("http://localhost:4200") // Permite solicitudes desde este origen
+                            .allowedOrigins("*") // Permite solicitudes desde este origen
                             .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS");
                 }
             };
