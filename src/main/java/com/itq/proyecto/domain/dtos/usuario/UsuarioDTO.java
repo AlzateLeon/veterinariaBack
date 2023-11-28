@@ -21,5 +21,7 @@ public class UsuarioDTO extends ResultadoDTO {
     private int cantidadMascotas;
     private String imagenUser;
     private int citasPendientes;
+    private String celular;
+
 
 }

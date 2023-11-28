@@ -5,14 +5,12 @@ import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.usuario.*;
 import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
 import com.itq.proyecto.domain.enums.TipoUsuarioEnum;
-import com.itq.proyecto.domain.servicio.ActivationRequestService;
 import com.itq.proyecto.repositorio.RepositorioActivationRequest;
 import com.itq.proyecto.repositorio.RepositorioCita;
 import com.itq.proyecto.repositorio.entidades.Usuario;
 import com.itq.proyecto.domain.servicio.CreacionUsuarioServicio;
 import com.itq.proyecto.repositorio.RepositorioUsuario;
 import lombok.AllArgsConstructor;
-import org.springframework.http.HttpStatus;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.stereotype.Service;
@@ -30,11 +28,9 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
 
     private JavaMailSender javaMailSender;
 
-    //private ActivationRequestService activationRequestService;
     private RepositorioActivationRequest repositorioActivationRequest;
 
     private RepositorioCita repositorioCita;
-
 
     @Override
     public CreacionUsuarioOutDTO crearUsuario(CreacionUsuarioIn creacionIn) {
@@ -56,6 +52,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
             user.setCorreo(creacionIn.getCorreo());
             user.setCedula(creacionIn.getCedula());
             user.setTipoUsuarioEnum(creacionIn.getTipoUsuarioEnum());
+            user.setCelular(creacionIn.getCelular());
             user.setActivo(false);
 
             repositorioUsuario.save(user);
@@ -100,6 +97,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
         userDTO.setActivo(userEntity.isActivo());
         userDTO.setCantidadMascotas(userEntity.getMascotas().size());
         userDTO.setImagenUser(userEntity.getImagen());
+        userDTO.setCelular(userEntity.getCelular());
         userDTO.setCitasPendientes(repositorioCita.
                 countByEstadoCitaMedicaEnumAndIdUser(EstadoCitaMedicaEnum.PROGRAMADA,
                         userEntity.getIdUser()));
@@ -147,6 +145,7 @@ public class CreacionUsuarioServicioImpl implements CreacionUsuarioServicio {
             Usuario userEntity = usuario.get();
             userEntity.setNombre(editarusuarioMascotaIn.getNombre());
             userEntity.setCorreo(editarusuarioMascotaIn.getCorreo());
+            userEntity.setCelular(editarusuarioMascotaIn.getCelular());
             userEntity.setImagen(editarusuarioMascotaIn.getImagen());
 
             repositorioUsuario.save(userEntity);

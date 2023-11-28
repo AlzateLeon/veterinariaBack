@@ -16,5 +16,6 @@ public class CreacionUsuarioIn {
     private String userName;
     private String correo;
     private String cedula;
+    private String celular;
 
 }

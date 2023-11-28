@@ -13,4 +13,5 @@ public class EditarUsuarioMascotaInDTO {
     private String correo;
     private String nombre;
     private String imagen;
+    private String celular;
 }

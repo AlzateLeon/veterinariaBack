@@ -3,7 +3,6 @@ package com.itq.proyecto.domain.servicio.impl;
 import com.itq.proyecto.domain.dtos.ResultadoDTO;
 import com.itq.proyecto.domain.dtos.vacuna.*;
 import com.itq.proyecto.domain.enums.EstadoCitaMedicaEnum;
-import com.itq.proyecto.domain.servicio.CitaServicio;
 import com.itq.proyecto.repositorio.RepositorioCita;
 import com.itq.proyecto.repositorio.entidades.CitaMedica;
 import com.itq.proyecto.repositorio.entidades.Vacuna;
@@ -23,7 +22,6 @@ import java.util.Optional;
 public class VacunaServcioImpl implements VacunaServicio {
 
     private RepositorioVacuna repositorioVacuna;
-    private RepositorioMascota repositorioMascota;
     private RepositorioCita repositorioCita;
 
     @Override

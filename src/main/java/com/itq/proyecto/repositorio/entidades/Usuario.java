@@ -49,5 +49,7 @@ public class Usuario {
     @Column(nullable = true, name = "IMAGEN")
     private String imagen;
 
+    @Column(nullable = true, name = "CELULAR")
+    private String celular;
 
 }
